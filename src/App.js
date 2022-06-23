@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { BrowserRouter as Router,  NavLink } from "react-router-dom";
+import Route from "react-router-dom/Route";
+import SignUpForm from "./pages/SignUp";
+import SignInForm from "./pages/SignIn";
+import Home from './pages/Home'
+import Profile from './pages/Profile'
+import "./App.css";
+import { Switch } from "@material-ui/core";
+import ProductView from "./pages/ProductView";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <Router basename="/">
+        <div className="App">
+
+          <Route exact path='/' component={() => <Home style={{border:"solid red 5px"}}/>} />
+
+          <Route  exact path="/login/" component={SignUpForm}/>
+          
+          <Route exact path="/login/sign-in" component={SignInForm} />
+
+          <Route  exact path="/profile" component={Profile} />
+
+          <Route exact path="/product" component={ProductView}/>  
+        </div>
+      </Router>
+      
+      
+    );
+  }
 }
 
 export default App;
