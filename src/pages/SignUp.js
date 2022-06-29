@@ -20,6 +20,15 @@ const SignUpForm = () => {
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   
+  //=========REGEX TEST==========
+  // const EMAIL_REGEX = /[\w._+-%]+@[\w.-]+\.[a-zA-Z]{2,3}/;
+  // const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{5,20}$/;
+  // const PASSWORD_REGEX = /^(?=.*[A-Z])(?=.*[!#$%])(?=.*[a-z])(?=.*[0-9]).{7,20}$/;
+  const REGEX_EXPR = {
+    USERNAME: /^[a-zA-Z][a-zA-Z0-9-_]{5,20}/,
+    PASSWORD: /^(?=.*[A-Z])(?=.*[!#$%])(?=.*[a-z])(?=.*[0-9]).{7,20}/
+  }
+
   //La prima incarcare in DOM se face focus pe campul de nume
   useEffect(() => {
     
@@ -74,7 +83,7 @@ const SignUpForm = () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          withCredentials: true
+          //withCredentials: true
         }
         
       )

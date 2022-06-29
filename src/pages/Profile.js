@@ -61,14 +61,8 @@ const Profile = () => {
                         <div className="col-md-6"><label className="labels">Surname</label><input type="text" className="form-control" value="" placeholder="surname"/></div>
                     </div>
                     <div className="row mt-3">
-                        <div className="col-md-12"><label className="labels">Mobile Number</label><input type="text" className="form-control" placeholder="enter phone number" value=""/></div>
-                        <div className="col-md-6"><label className="labels">Country</label><input type="text" className="form-control" placeholder="country" value=""/></div>
-                        <div className="col-md-6"><label className="labels">State/Region</label><input type="text" className="form-control" value="" placeholder="state"/></div>
-                        <div className="col-md-12"><label className="labels">Address Line 1</label><input type="text" className="form-control" placeholder="enter address line 1" value=""/></div>
-                        <div className="col-md-12"><label className="labels">Address Line 2</label><input type="text" className="form-control" placeholder="enter address line 2" value=""/></div>
-                        <div className="col-md-12"><label className="labels">Postcode</label><input type="text" className="form-control" placeholder="Postcode" value=""/></div>
-                        <div className="col-md-12"><label className="labels">State</label><input type="text" className="form-control" placeholder="State" value=""/></div>
-                        <div className="col-md-12"><label className="labels">Area</label><input type="text" className="form-control" placeholder="Area" value=""/></div>
+                        <div className="col-md-12"><label className="labels">Mobile Number</label><input type="text" className="form-control" placeholder="Nr. Telefon" value=""/></div>
+                        <div className="col-md-6"><label className="labels">Country</label><input type="text" className="form-control" placeholder="Tara" value=""/></div>
                         <div className="col-md-12"><label className="labels">Email</label><input type="text" className="form-control" placeholder="Email" value=""/></div>
                     </div>
                     

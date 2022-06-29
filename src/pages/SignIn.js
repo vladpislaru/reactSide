@@ -42,17 +42,17 @@ const SignInForm = () => {
       return
     }
 
-    console.log("Inainte de fetch")
-    const response = await fetch('http://localhost:1337/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: email,
-        password: criptare(password)
-      })
-    })
+    // console.log("Inainte de fetch")
+    // const response = await fetch('http://localhost:1337/login', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     email: email,
+    //     password: criptare(password)
+    //   })
+    // })
 
 
   
@@ -65,7 +65,7 @@ const SignInForm = () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          withCredentials: true
+          //withCredentials: true
         }
       ).then(response => {
         console.log(response);
