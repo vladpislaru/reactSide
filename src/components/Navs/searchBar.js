@@ -8,7 +8,7 @@ import logoIcon from '../../static/logo.png'
 import AuthSession from "../../Utils/AuthSession";
 import {Link} from "react-router-dom";
 const GlobalNav = () => {
-    const {auth} = useContext(AuthSession);
+    const {auth, setAuth} = useContext(AuthSession);
     console.log(auth)
     return(
         <div >
@@ -31,25 +31,29 @@ const GlobalNav = () => {
                     <Offcanvas.Body>
                         
                         <Nav className="justify-content-end flex-grow-1 pe-3">
-                            <Form className="d-flex">
+                            <Form className="d-flex"  >
                                 <FormControl
                                     type="search"
                                     placeholder="Search"
                                     className="me-2"
                                     aria-label="Search"
+                                    style={{height:"35px"}}
                                 />
-                                <Button variant="outline-success">Search</Button>
-                            </Form>
-                            <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link>
-                                {!auth.email ? <Link to="/login">Login/Register</Link> : <Link to="/profile">{auth.name}</Link>  }
+                                <Button variant="outline-success" style={{height:"35px"}}>Search</Button>
+                            </Form>                           
+                            <Nav.Link style={{fontWeight:"bold"}}>
+                                {!auth.email ? <Link to="/login"  style={{textDecoration: "none"}}>Login/Register</Link> : <Link to="/profile"  style={{textDecoration: "none"}}>{auth.name}</Link>  }
                             </Nav.Link>
-                            
+                            <Nav.Link style={{fontWeight:"bold"}}>
+                                {!auth.email ? <Link to="/" style={{textDecoration: "none"}}>Home</Link> : <Link to="/login" style={{textDecoration: "none"}}>Logout</Link>  }
+                            </Nav.Link>
                             <NavDropdown
-                                title="Dropdown"
+                                title="Menu"
                                 id={`offcanvasNavbarDropdown-expand-md`}
                             >
-                                <NavDropdown.Item href="#action3">Your products</NavDropdown.Item>
+                                <NavDropdown.Item >
+                                {auth.email ? <Link to="/personal/products"  style={{textDecoration: "none"}}>Adauga produs</Link> : <Link to="/login"  style={{textDecoration: "none"}}>Login</Link>  }
+                                </NavDropdown.Item>
                                 <NavDropdown.Item href="#action4">
                                 Testing products
                                 </NavDropdown.Item>

@@ -100,8 +100,9 @@ background: #DFC2F2;
 /* control1 */
 
 .control1{
-	position: relative;
-	
+	position: absolute;
+	margin: auto;
+	bottom: 20px;
 	
 }
 /* the Button */

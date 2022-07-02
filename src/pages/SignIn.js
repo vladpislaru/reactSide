@@ -9,7 +9,7 @@ import AzureAwsGcp from "../static/vortex.jpg"
 import AuthSession from "../Utils/AuthSession";
 import { useHistory } from "react-router-dom";
 import axios from '../Utils/axios_main'
-
+import Loading from "../components/Utils/Loading";
 const SignInForm = () => {
 
   const {setAuth} = useContext(AuthSession);
@@ -18,11 +18,12 @@ const SignInForm = () => {
   const [errMsg, setErrMsg] = useState("");
   const navigate = useHistory();
   const emailRef = useRef();
-  
+  const [isLoading, setIsLoading]= useState(false);
   //Numele algoritmul de criptare este pastrat variabila de mediu pentru a nu fi vizibila pentru utilizatori
   const criptare  = require(process.env.REACT_APP_CRYPTING);
 
   useEffect(() => {
+    setAuth({});
     emailRef.current.focus();
   }, [])
 
@@ -42,20 +43,7 @@ const SignInForm = () => {
       return
     }
 
-    // console.log("Inainte de fetch")
-    // const response = await fetch('http://localhost:1337/login', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     email: email,
-    //     password: criptare(password)
-    //   })
-    // })
-
-
-  
+      setIsLoading(true);
       await axios.post('/login',
         JSON.stringify({
           email: email,
@@ -72,11 +60,14 @@ const SignInForm = () => {
         setAuth({
           email,
           name: response.data.name, 
-          password: criptare(password)
+          password: criptare(password),
+          Id: response.data.Id
         })
-
+        setIsLoading(false);
        navigate.push('/')
       }).catch(err => {
+        setIsLoading(false);
+
         if( !err?.response){
           setErrMsg("SERVICIUL ESTE MOMENTAN INDISPONIBIL! ")
         }else if(err.response?.status === 404){
@@ -95,6 +86,7 @@ const SignInForm = () => {
 
     return (
     <>
+        {isLoading ? <Loading/> : ""}
         <div className="appAside" >
             <img src={AzureAwsGcp}></img>
         </div>

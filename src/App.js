@@ -8,7 +8,7 @@ import Profile from './pages/Profile'
 import "./App.css";
 import { Switch } from "@material-ui/core";
 import ProductView from "./pages/ProductView";
-
+import Products from "./pages/Products";
 class App extends Component {
   render() {
     return (
@@ -24,6 +24,8 @@ class App extends Component {
           <Route  exact path="/profile" component={Profile} />
 
           <Route exact path="/product" component={ProductView}/>  
+
+          <Route exact path="/personal/products" component={Products}/>
         </div>
       </Router>
       

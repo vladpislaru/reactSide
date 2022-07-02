@@ -4,7 +4,7 @@ import LoginNav from "../components/Navs/loginNav"
 import AzureAwsGcp from "../static/vortex.jpg"
 import { useHistory } from "react-router-dom";
 import AuthSession from '../Utils/AuthSession'
-
+import Loading from "../components/Utils/Loading";
 import axios from "../Utils/axios_main";
 const SignUpForm = () => {
   const criptare = require(process.env.REACT_APP_CRYPTING)
@@ -19,7 +19,7 @@ const SignUpForm = () => {
   const [hasAgreed, setHasAgreed] = useState(false); 
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
-  
+  const [isLoading, setIsLoading] = useState(false);
   //=========REGEX TEST==========
   // const EMAIL_REGEX = /[\w._+-%]+@[\w.-]+\.[a-zA-Z]{2,3}/;
   // const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{5,20}$/;
@@ -31,7 +31,7 @@ const SignUpForm = () => {
 
   //La prima incarcare in DOM se face focus pe campul de nume
   useEffect(() => {
-    
+    setAuth({});
     nameRef.current.focus();
   }, []);
 
@@ -56,7 +56,7 @@ const SignUpForm = () => {
     }
 
     if(name ==""){
-      setErrMsg("Nu ati completat adresa de Nume !")
+      setErrMsg("Nu ati completat Numele de utilizator !")
       return
     }
 
@@ -71,7 +71,7 @@ const SignUpForm = () => {
     }
 
     
-
+    setIsLoading(true);
     try{
       const response = await axios.post('/register', 
         JSON.stringify({
@@ -96,11 +96,15 @@ const SignUpForm = () => {
         email, 
         name,
         password: criptare(password),
+        Id: response.data.Id
       })
+      setIsLoading(false);
       navigate.push('/')
       
     }catch (err){
       console.log(err)
+      setIsLoading(false);
+
       if(!err?.response){
         setErrMsg("SERVICIUL ESTE MOMENTAN INDISPONIBIL! ")
       }else if ( err.response?.status === 409){
@@ -116,6 +120,7 @@ const SignUpForm = () => {
   
   return (
     <>
+      {isLoading ? <Loading/> : ""}
       <div className="appAside" >
           <img src={AzureAwsGcp}></img>
       </div>
