@@ -16,7 +16,7 @@ const Profile = () => {
     useEffect(()=>{
         
         //console.log(auth);
-        if(!auth.email || !auth.password){
+        if(!auth.authenticated.email || !auth.authenticated.password){
             navigate.push('/');
         }else{
 
@@ -47,8 +47,8 @@ const Profile = () => {
                             <button className="editSpanButton" onClick={handleFakeEdit}>
                                 <FontAwesomeIcon icon={faPenToSquare}/>
                             </button>
-                            <span className="text-black-50">{auth.name}</span>
-                            <span className="text-black-50">{auth.email}</span>
+                            <span className="text-black-50">{auth.authenticated.name}</span>
+                            <span className="text-black-50">{auth.authenticated.email}</span>
                             <span> </span>
                         </div>
                     </div>

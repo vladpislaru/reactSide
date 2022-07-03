@@ -12,7 +12,7 @@ import axios from '../Utils/axios_main'
 import Loading from "../components/Utils/Loading";
 const SignInForm = () => {
 
-  const {setAuth} = useContext(AuthSession);
+  const {auth, setAuth} = useContext(AuthSession);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
@@ -23,7 +23,7 @@ const SignInForm = () => {
   const criptare  = require(process.env.REACT_APP_CRYPTING);
 
   useEffect(() => {
-    setAuth({});
+    
     emailRef.current.focus();
   }, [])
 
@@ -43,43 +43,29 @@ const SignInForm = () => {
       return
     }
 
-      setIsLoading(true);
-      await axios.post('/login',
-        JSON.stringify({
-          email: email,
-          password: criptare(password)
-        }),
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          //withCredentials: true
-        }
-      ).then(response => {
-        console.log(response);
-        setAuth({
-          email,
-          name: response.data.name, 
-          password: criptare(password),
-          Id: response.data.Id
-        })
-        setIsLoading(false);
-       navigate.push('/')
-      }).catch(err => {
-        setIsLoading(false);
-
-        if( !err?.response){
-          setErrMsg("SERVICIUL ESTE MOMENTAN INDISPONIBIL! ")
-        }else if(err.response?.status === 404){
-          setErrMsg("Adresa de email sau parola sunt gresite");
-        }else if(err.response?.status === 401){
-          setErrMsg("Acces neautorizat!")
-        }else{
-          setErrMsg("A aparut o problema cu server-ul");
-          console.log(err.response.status)
-        } 
-        console.log(err);
-      })
+    setIsLoading(true);
+    var newAuth = {...auth}
+    var name ="" ;
+    for(var i = 0 ; i < auth.registred.length ; i++){
+      if(auth.registred[i].email == email){
+        name = auth.registred[i].name;
+      }
+    }
+    if(name !== ""){
+      newAuth.authenticated = {
+        email,
+        name,
+        password: criptare(password),
+      }
+      setAuth(newAuth);
+      setIsLoading(false);
+      navigate.push('/');
+    }else{
+      setIsLoading(false);
+      setErrMsg( "Adresa de email sau parola sunt gresite")
+      return
+    }
+    
 
   }
 

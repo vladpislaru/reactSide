@@ -42,17 +42,17 @@ const GlobalNav = () => {
                                 <Button variant="outline-success" style={{height:"35px"}}>Search</Button>
                             </Form>                           
                             <Nav.Link style={{fontWeight:"bold"}}>
-                                {!auth.email ? <Link to="/login"  style={{textDecoration: "none"}}>Login/Register</Link> : <Link to="/profile"  style={{textDecoration: "none"}}>{auth.name}</Link>  }
+                                {!auth.authenticated.email ? <Link to="/login"  style={{textDecoration: "none"}}>Login/Register</Link> : <Link to="/profile"  style={{textDecoration: "none"}}>{auth.authenticated.name}</Link>  }
                             </Nav.Link>
                             <Nav.Link style={{fontWeight:"bold"}}>
-                                {!auth.email ? <Link to="/" style={{textDecoration: "none"}}>Home</Link> : <Link to="/login" style={{textDecoration: "none"}}>Logout</Link>  }
+                                {!auth.authenticated.email ? <Link to="/" style={{textDecoration: "none"}}>Home</Link> : <Link to="/login" style={{textDecoration: "none"}}>Logout</Link>  }
                             </Nav.Link>
                             <NavDropdown
                                 title="Menu"
                                 id={`offcanvasNavbarDropdown-expand-md`}
                             >
                                 <NavDropdown.Item >
-                                {auth.email ? <Link to="/personal/products"  style={{textDecoration: "none"}}>Adauga produs</Link> : <Link to="/login"  style={{textDecoration: "none"}}>Login</Link>  }
+                                {auth.authenticated.email ? <Link to="/personal/products"  style={{textDecoration: "none"}}>Adauga produs</Link> : <Link to="/login"  style={{textDecoration: "none"}}>Login</Link>  }
                                 </NavDropdown.Item>
                                 <NavDropdown.Item href="#action4">
                                 Testing products

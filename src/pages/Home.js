@@ -1,26 +1,21 @@
 import React from "react";
 //import Nav from "../components/Navs/loginNav"
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import {Col, Container, Row} from 'react-bootstrap/'
 import ProductItem from "../components/Products/ProductItem"
 import GlobalNav from "../components/Navs/searchBar";
 import Users from '../components/Users'
 import axios from "../Utils/axios_main";
-
+import AuthSession from "../Utils/AuthSession";
 const HomePage = () => {
     const [products, setProdutcs] = useState([]);
     const [filter, setFilter] = useState({});
     const [filtredProducts, setFilteredProducts] = useState([]);
-    
+    const {auth, setAuth} = useContext(AuthSession);
+
     useEffect( () => {
-         axios.get('/products/getAll')
-        .then(response => {
-            console.log("Response" + response);
-            setProdutcs(response.data.products);
-            setFilteredProducts(response.data.products);
-        }).catch( ex=>{
-            console.log(ex)
-        })
+
+            setProdutcs(auth.products)
 
     }, [])
     return(

@@ -44,7 +44,7 @@ const AddProducts = (props) => {
   useEffect(()=>{
         
     //console.log(auth);
-    if(!auth.email || !auth.password){
+    if(!auth.authenticated.email || !auth.authenticated.password){
         navigate.push('/');
     }else{
 
@@ -123,27 +123,21 @@ const AddProducts = (props) => {
     setIsLoading(true);
     console.log("Aici in cerere de adaugare")
     try{
-      const response = await axios.post('/products/add', 
-        JSON.stringify({
-          ownerId: auth.Id,
-          product:{
-            name,
-            category,
-            price,
-            description,
-            activeDeployOptions
-          }
-        }),
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          //withCredentials: true
-        }
-        
-      )
+
+      var newAuth = {...auth};
+      newAuth.products.push({
+        name,
+        category,
+        description,
+        price,
+        publisher: auth.authenticated,
+        activeDeployOptions
+      });
+
+      setAuth(newAuth);
       setIsLoading(false);
       navigate.push('/');
+
     }catch(err){
       setIsLoading(false);
       handleOk = () => {handlePopUpClose()}

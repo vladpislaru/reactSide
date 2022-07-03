@@ -28,10 +28,10 @@ const SignUpForm = () => {
     USERNAME: /^[a-zA-Z][a-zA-Z0-9-_]{5,20}/,
     PASSWORD: /^(?=.*[A-Z])(?=.*[!#$%])(?=.*[a-z])(?=.*[0-9]).{7,20}/
   }
-
+ 
   //La prima incarcare in DOM se face focus pe campul de nume
   useEffect(() => {
-    setAuth({});
+    
     nameRef.current.focus();
   }, []);
 
@@ -72,48 +72,60 @@ const SignUpForm = () => {
 
     
     setIsLoading(true);
-    try{
-      const response = await axios.post('/register', 
-        JSON.stringify({
-          name: name,
-          email: email,
-          password: criptare(password)
-        }),
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          //withCredentials: true
-        }
-        
-      )
-
-      //const data = await response.json();
-
-      console.log(response);
-      
-      setAuth({
-        email, 
-        name,
-        password: criptare(password),
-        Id: response.data.Id
-      })
-      setIsLoading(false);
-      navigate.push('/')
-      
-    }catch (err){
-      console.log(err)
-      setIsLoading(false);
-
-      if(!err?.response){
-        setErrMsg("SERVICIUL ESTE MOMENTAN INDISPONIBIL! ")
-      }else if ( err.response?.status === 409){
-        setErrMsg("Aceasta adresa de email este deja inregistrata !");
-      }else {
-       
-        setErrMsg("A aparut o problema cu server-ul");
-      }
+    var newAuth = {...auth}
+    console.log(auth)
+    newAuth.authenticated = {
+      email,
+      name,
+      password: criptare(password),
     }
+
+    newAuth.registred.push({
+      email,
+      name,
+      password: criptare(password),
+    })   
+
+    console.log(newAuth)
+
+    setAuth(newAuth);
+    setIsLoading(false);
+    navigate.push('/');
+    // try{
+    //   const response = await axios.post('/register', 
+    //     JSON.stringify({
+    //       name: name,
+    //       email: email,
+    //       password: criptare(password)
+    //     }),
+    //     {
+    //       headers: {
+    //         'Content-Type': 'application/json'
+    //       },
+    //       //withCredentials: true
+    //     }
+        
+    //   )
+
+    //   //const data = await response.json();
+
+    //   console.log(response);
+      
+      
+      
+    // }catch (err){
+    //   console.log(err)
+    //   setIsLoading(false);
+
+    //   if(!err?.response){
+    //     setErrMsg("SERVICIUL ESTE MOMENTAN INDISPONIBIL! ")
+    //   }else if ( err.response?.status === 409){
+    //     setErrMsg("Aceasta adresa de email este deja inregistrata !");
+    //   }else {
+       
+    //     setErrMsg("A aparut o problema cu server-ul");
+    //   }
+    // }
     
   }
 
